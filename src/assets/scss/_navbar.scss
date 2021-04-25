@@ -1,0 +1,38 @@
+.nav-bag {
+  background-color: rgb(84, 92, 100);
+}
+.nav-link {
+  color: #fff;
+  padding: 18px 20px;
+  font-size: 14px;
+  border-bottom: solid 2px transparent;
+}
+.nav-link:hover {
+  background-color: #3f464c;
+  color: #fff;
+  text-decoration: underline;
+}
+.nav-link-right {
+  &:hover {
+    text-decoration: none;
+  }
+  &:focus {
+    color: #55d04b;
+    border-bottom: solid 2px #55d04b;
+    background-color: #3f464c;
+    text-decoration: none;
+  }
+}
+.login-error {
+  font-size: 20px;
+  font-weight: bolder;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.nav-link.active { // 動態綁定 Vue
+  color: #55d04b;
+  border-bottom: solid 2px #55d04b;
+  background-color: #3f464c;
+  text-decoration: none;
+}
