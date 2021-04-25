@@ -12,7 +12,7 @@
         </nav>
         <h1 class="text-center mt-3">帳號登錄</h1>
         <Alert />
-        <Form v-slot='{ errors, values, validate }'>
+        <Form @submit="signin" v-slot='{ errors, values, validate }'>
           <!--此行隱藏 : 錯誤訊息變數要掛上去，否則 ESLint 會跳錯-->
           <div style="display:none">{{ errors }}{{ values }}{{ validate }}</div>
           <div class="form-group">
@@ -28,10 +28,11 @@
             <error-message name="密碼" class="invalid-feedback login-error"></error-message>
           </div>
           <div class="form-group">
-            <button type="button" class="btn btn-primary" @click="signin">
+            <button type="submit" class="btn btn-primary mr-5">
               Login
               <i class="fas fa-spinner fa-spin" v-if="status.loadingIcon"></i>
             </button>
+            <router-link to="/" class="btn btn-secondary">不用帳密登入</router-link>
           </div>
         </Form>
         <router-view/>

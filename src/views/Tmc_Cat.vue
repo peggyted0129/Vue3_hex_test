@@ -76,17 +76,6 @@ export default {
   created () {
     const vm = this
     vm.setNavActive('tmc_cat_Active') // Navbar 樣式狀態停留
-    // 拉單資料回傳
-    /*
-    const api = `${process.env.VUE_APP_API_URL}/api/get_tmc/01/${vm.userData[0].mancode}`
-    vm.$http.get(api, {
-      headers: {
-        Authorization: vm.userToken[0]
-      }
-    }).then(res => {
-      vm.todayData = res.data
-    })
-    */
   }
 }
 </script>
