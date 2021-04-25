@@ -1,6 +1,8 @@
 <template>
 <section>
-  <h1>456</h1>
+  <button type="button" @click="textBtn" class="btn-lg btn-secondary mt-5 font-weight-bolder">
+    接收資料失敗，有警示聲
+  </button>
 </section>
 </template>
 
@@ -10,15 +12,33 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      userData: JSON.parse(localStorage.getItem('userData')) || [], // 取出 localStorage 的 userData
-      userToken: JSON.parse(localStorage.getItem('userToken')) || []
     }
   },
   computed: {
     ...mapGetters(['navActive']) // 傳 Vuex 的值
   },
   methods: {
-    ...mapActions(['setNavActive']) // 傳 Vuex 的方法
+    ...mapActions(['setNavActive']), // 傳 Vuex 的方法
+    textBtn () {
+      const vm = this
+      vm.$http.get('https://randomuser.me/api/').then(res => {
+        console.log('撈資料成功', res.data)
+        vm.playAudio1()
+        vm.$store.dispatch('alertModules/updateMessage', { message: `處理完畢, 請執行下一筆 ! ${vm.tcatno}`, status: 'info' })
+      }).catch(err => {
+        console.log(err)
+        vm.$store.dispatch('alertModules/updateMessage', { message: '資料有誤，請再次確認', status: 'danger' })
+        vm.playAudio()
+      })
+    },
+    playAudio () {
+      const audio = new Audio('/sound/alarm-tmc01.mp3')
+      audio.play()
+    },
+    playAudio1 () {
+      const audio = new Audio('/sound/alert_warm_bright_positive_event.mp3')
+      audio.play()
+    }
   },
   created () {
     const vm = this

@@ -1,12 +1,12 @@
 <template>
 <section class="mt-5">
-  <Form @submit="Tmcprint" v-slot="{ errors, values, validate }">
+  <Form @submit="Tmcprint1" v-slot="{ errors, values, validate }">
     <div style="display:none">{{ errors }}{{ values }}{{ validate }}</div>
     <label for="點餐單號" class="h1 text-left mb-3">點餐單號</label>
     <Field type="text" v-model="tcatno" class="form-control tmc-input-h" id="點餐單號" name="點餐單號"
      :class="{ 'is-invalid': errors['點餐單號'] }" rules="required"></Field>
     <error-message name="點餐單號" class="invalid-feedback"></error-message>
-    <button type="submit" class="btn-lg btn-secondary mt-5 font-weight-bolder">
+    <button type="submit" @click.prevent="Tmcprint" class="btn-lg btn-secondary mt-5 font-weight-bolder">
       輸入
     </button>
   </Form>
@@ -16,11 +16,11 @@
   <div>
     <p class="d-flex align-items-center">
       <span class="h1 mr-9">今日張數 : 0 </span>
-      <button type="button" class="btn-lg btn-outline-secondary text-dark font-weight-bolder" @click="detail">
+      <button type="button" class="btn-lg btn-outline-secondary text-dark font-weight-bolder">
         明細
       </button>
     </p>
-    <button type="button" class="btn-lg btn-outline-secondary text-dark font-weight-bolder" @click="updateData">
+    <button type="button" class="btn-lg btn-outline-secondary text-dark font-weight-bolder">
       更新
     </button>
   </div>
@@ -55,14 +55,25 @@ export default {
   },
   methods: {
     ...mapActions(['setNavActive']), // 傳 Vuex 的方法
-    Tmcprint () {
+    async Tmcprint () {
       const vm = this
-      console.log('1234')
       vm.$store.dispatch('alertModules/updateMessage', { message: '處理中...請稍等!', status: 'danger' })
-      vm.$http.get('https://randomuser.me/api/').then(res => {
-        console.log('撈資料成功', res)
-        vm.$store.dispatch('alertModules/updateMessage', { message: '成功撈取資料', status: 'info' })
-      })
+      try {
+        if (vm.tcatno.length === 12) {
+          vm.$http.get('https://randomuser.me/api/').then(res => {
+            console.log('撈資料成功', res)
+            vm.$store.dispatch('alertModules/updateMessage', { message: `處理完畢, 請刷下一張單據 ! ${vm.tcatno}`, status: 'info' })
+          })
+        } else {
+          vm.$store.dispatch('alertModules/updateMessage', { message: `托運單條碼 長度須是 12 碼, 請檢查! ${vm.tcatno}`, status: 'danger' })
+          vm.play_audio(vm.audios[1])
+        }
+        setTimeout(() => {
+          vm.tcatno = ''
+        }, 1000)
+      } catch (error) {
+        console.log(error)
+      }
     },
     play_audio (audio) {
       audio.isPlaying = true
