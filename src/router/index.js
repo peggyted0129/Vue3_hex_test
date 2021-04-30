@@ -23,6 +23,10 @@ const routes = [{
       component: () => import('../views/Tmc_Hct.vue')
     },
     {
+      path: 'print',
+      component: () => import('../views/Print.vue')
+    },
+    {
       path: 'invoice',
       component: () => import('../views/Invoice.vue')
     },

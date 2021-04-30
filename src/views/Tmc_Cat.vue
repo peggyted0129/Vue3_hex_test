@@ -1,6 +1,6 @@
 <template>
 <section class="mt-5">
-  <Form @submit="Tmcprint1" v-slot="{ errors, values, validate }">
+  <Form @submit="Tmcprint" v-slot="{ errors, values, validate }">
     <div style="display:none">{{ errors }}{{ values }}{{ validate }}</div>
     <label for="點餐單號" class="h1 text-left mb-3">點餐單號</label>
     <Field type="text" v-model="tcatno" class="form-control tmc-input-h" id="點餐單號" name="點餐單號"

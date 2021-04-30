@@ -25,7 +25,7 @@
               <a class="nav-link nav-hover" href="#">菜單_甜點</a>
             </li>
             <li>
-              <a class="nav-link nav-hover" href="#">發票列印</a>
+              <router-link to="/print" class="nav-link nav-hover" :class="{ active: navActive == 'print_Active' }">發票列印</router-link>
             </li>
             <li>
               <a class="nav-link nav-hover" href="#">發票重印</a>
